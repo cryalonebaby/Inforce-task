@@ -17,11 +17,11 @@ app.use('/api', require('./routes/heroes.routes'))
 
 async function start() {
   try {
-      mongoose.connect("mongodb+srv://cryalonebaby:nikita21@cluster0.tmk9pvv.mongodb.net/heros?retryWrites=true&w=majority", {
-          useNewUrlParser: true,
-          useUnifiedTopology: true
-      })
-      app.listen(port, () => console.log(`App started on port ${port}`))
+    mongoose.connect("mongodb+srv://cryalonebaby:nikita21@cluster0.tmk9pvv.mongodb.net/heros?retryWrites=true&w=majority", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    app.listen(port, () => console.log(`App started on port ${port}`))
   } catch (e) {
       console.log('Server Error', e.message);
       process.exit(1)

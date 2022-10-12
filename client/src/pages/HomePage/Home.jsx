@@ -7,7 +7,6 @@ import { fetchHeroes } from '../../redux/slices/heroes'
 const Home = () => {
   const dispatch = useDispatch()
   const {heroes} = useSelector(state => state.heroes)
-  console.log(heroes);
 
   const isLoading = heroes.status === 'loading'
 
@@ -15,8 +14,15 @@ const Home = () => {
     dispatch(fetchHeroes())
   }, [])
 
+  let pageNumbers = []
+
+  for(let i = 0; i < heroes.pagesAmount; i++) {
+    pageNumbers.push(<Typography key={i}>{i + 1}</Typography>)
+  }
+
   return (
     <Box>
+      <Typography variant='h6'>{heroes.currentPage}</Typography>
       {(isLoading ? [...Array(5)] : heroes.items).map((hero, index) => 
         isLoading ? (
           <Card 
@@ -30,6 +36,9 @@ const Home = () => {
           />
         )
       )}
+      <Box display={'flex'}>
+        {pageNumbers}
+      </Box>
     </Box>
   )
 }

@@ -9,8 +9,25 @@ router.get(
   '/heroes',
   async (req, res) => {
     try {
-      const result = await Hero.find()
-      res.send(result)
+
+      // number of records to show on one page
+      const perPage = 1
+
+      // total number of records
+      const total = await Hero.countDocuments()
+
+      // amount of pages
+      const pages = Math.ceil(total/perPage)
+
+      // get current page
+      const current = !req.query.page ? 1 : req.query.page
+
+      // records start from
+      const startFrom = (current - 1) * perPage
+
+      const result = await Hero.find().skip(startFrom).limit(perPage).sort({_id: -1})
+
+      res.json({pages: pages, current: current, heroes: result})
   
     } catch (e) {
         res.status(500).json({ message: 'Something went wrong'})
