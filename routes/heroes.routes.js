@@ -1,6 +1,5 @@
 const {Router} = require('express')
 const Hero = require('../models/Hero')
-const {check, validationResult} = require('express-validator')
 
 const router = Router()
 

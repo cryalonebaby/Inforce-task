@@ -1,8 +1,9 @@
 import {Box, Typography} from '@mui/material'
 import { useEffect } from 'react'
+import CardHero from '../../components/CardHero'
 import { useDispatch, useSelector } from 'react-redux'
-import Card from '../../components/Card'
 import { fetchHeroes } from '../../redux/slices/heroes'
+import PaginationComponent from '../../components/Pagination/PaginationComponent'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -11,33 +12,26 @@ const Home = () => {
   const isLoading = heroes.status === 'loading'
 
   useEffect(() => {
-    dispatch(fetchHeroes())
+    dispatch(fetchHeroes(heroes.currentPage))
   }, [])
 
-  let pageNumbers = []
-
-  for(let i = 0; i < heroes.pagesAmount; i++) {
-    pageNumbers.push(<Typography key={i}>{i + 1}</Typography>)
-  }
-
   return (
-    <Box>
-      <Typography variant='h6'>{heroes.currentPage}</Typography>
-      {(isLoading ? [...Array(5)] : heroes.items).map((hero, index) => 
-        isLoading ? (
-          <Card 
-            key={index} 
-            isLoading={true}
-          />
-        ) : (
-          <Card
-            key={index}
-            nickname={hero.nickname}
-          />
-        )
-      )}
-      <Box display={'flex'}>
-        {pageNumbers}
+    <Box width={'100%'} height={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+      <PaginationComponent/>
+      <Box display={'flex'} flexWrap={'wrap'} gap={2} justifyContent={'center'}>
+        {(isLoading ? [...Array(1)] : heroes.items).map((hero, index) => 
+          isLoading ? (
+            <CardHero 
+              key={index} 
+              isLoading={true}
+            />
+          ) : (
+            <CardHero
+              key={index}
+              hero={hero}
+            />
+          )
+        )}
       </Box>
     </Box>
   )

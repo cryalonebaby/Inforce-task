@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const fetchHeroes = createAsyncThunk('heroes/fetchHeroes', async () => {
-  const {data} = await axios.get('api/heroes')
+export const fetchHeroes = createAsyncThunk('heroes/fetchHeroes', async (pageNumber) => {
+  const {data} = await axios.get(`api/heroes?page=${pageNumber}`)
   return data
 })
 
@@ -10,8 +10,8 @@ const initialState = {
   heroes: {
     items: [],
     status: 'loading',
-    pagesAmount: null,
-    currentPage: 1
+    pagesAmount: 0,
+    currentPage: 1 
   }
 }
 
@@ -23,7 +23,7 @@ const heroesSlice = createSlice({
     [fetchHeroes.pending]: (state) => {
       state.heroes.items = []
       state.heroes.status = 'loading'
-      state.heroes.pagesAmount = null
+      state.heroes.pagesAmount = 0
       state.heroes.currentPage = 1
     },
     [fetchHeroes.fulfilled]: (state, action) => {
@@ -35,7 +35,7 @@ const heroesSlice = createSlice({
     [fetchHeroes.rejected]: (state) => {
       state.heroes.items = []
       state.heroes.status = 'error'
-      state.heroes.pagesAmount = null
+      state.heroes.pagesAmount = 0
       state.heroes.currentPage = 1
     },
   }
