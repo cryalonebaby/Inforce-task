@@ -1,3 +1,5 @@
+import { deleteHero, fetchHeroes } from '../redux/slices/heroes'
+import React from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,7 +12,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
-import { deleteHero, fetchHeroes } from '../redux/slices/heroes'
 
 const CardHero = ({hero, isLoading}) => {
   const dispatch = useDispatch()
@@ -20,6 +21,7 @@ const CardHero = ({hero, isLoading}) => {
     dispatch(deleteHero(hero._id))
     dispatch(fetchHeroes(1))
   }
+
   return (
     <Box>
       {isLoading ? (
@@ -49,17 +51,38 @@ const CardHero = ({hero, isLoading}) => {
             alt="hero"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
+            <Typography 
+              gutterBottom 
+              variant="h5" 
+              component="div" 
+              textAlign={'center'}
+            >
               {hero.nickname}
             </Typography>
           </CardContent>
-          <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
-            <Button size="small" onClick={() => navigate(`/hero:${hero._id}`)}>Learn More</Button>
+          <CardActions sx={{
+              display: 'flex', 
+              justifyContent: 'space-between'
+            }}>
+            <Button 
+              size="small" 
+              onClick={() => navigate(`/hero:${hero._id}`)}
+            >
+              Learn More
+            </Button>
             <Box display={'flex'}>
-              <IconButton onClick={() => navigate(`/edit:${hero._id}`)} size="small" sx={{display: 'flex'}}>
+              <IconButton 
+                onClick={() => navigate(`/edit:${hero._id}`)} 
+                size="small" 
+                sx={{display: 'flex'}}
+              >
                 <EditIcon/>
               </IconButton >
-              <IconButton onClick={handleDelete} size="small" sx={{display: 'flex'}}>
+              <IconButton 
+                onClick={handleDelete} 
+                size="small" 
+                sx={{display: 'flex'}}
+              >
                 <DeleteIcon sx={{color: 'darkred'}}/>
               </IconButton >
             </Box>
