@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Box} from '@mui/material'
 import CardHero from '../components/CardHero'
-import { fetchHeroes } from '../redux/slices/heroes'
+import { fetchHeroes } from '../redux/slices/heroes.js'
 import PaginationComponent from '../components/PaginationComponent'
 import { styled } from '@mui/system';
 
@@ -40,18 +40,20 @@ const HomePage = () => {
         justifyContent={'center'} 
         maxWidth={935}
       >
-        {(isLoading ? [...Array(1)] : heroes.items).map((hero, index) => 
-          isLoading ? (
-            <CardHero 
-              key={index} 
-              isLoading={true}
-            />
-          ) : (
-            <CardHero
-              key={index}
-              hero={hero}
-            />
-          )
+        {(isLoading ? 
+          [...Array(1)] : 
+          heroes.items).map((hero, index) => 
+            isLoading ? (
+              <CardHero 
+                key={index} 
+                isLoading={true}
+              />
+            ) : (
+              <CardHero
+                key={index}
+                hero={hero}
+              />
+            )
         )}
       </Box>
     </StyledBox>

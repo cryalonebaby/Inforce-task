@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react'
-import { createHero, updateHero } from '../redux/slices/heroes'
+import { createHero, updateHero } from '../redux/slices/heroes.js'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'

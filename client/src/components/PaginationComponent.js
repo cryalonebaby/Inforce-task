@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import React from 'react'
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { fetchHeroes } from '../redux/slices/heroes'
+import { fetchHeroes } from '../redux/slices/heroes.js'
 
 const PaginationComponent = () => {
 

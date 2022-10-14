@@ -31,7 +31,6 @@ const HeroPage = () => {
   const currentHero = heroes.items.find(item => item._id === id)
 
   useEffect(() => {
-    console.log(currentHero);
     if(!currentHero) {
       navigate('/')
     }

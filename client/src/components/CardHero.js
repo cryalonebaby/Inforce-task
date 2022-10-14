@@ -1,4 +1,4 @@
-import { deleteHero, fetchHeroes } from '../redux/slices/heroes'
+import { deleteHero, fetchHeroes } from '../redux/slices/heroes.js'
 import React from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card';
@@ -56,6 +56,7 @@ const CardHero = ({hero, isLoading}) => {
               variant="h5" 
               component="div" 
               textAlign={'center'}
+              data-testid="nickname"
             >
               {hero.nickname}
             </Typography>
