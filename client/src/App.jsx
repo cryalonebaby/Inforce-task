@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './pages/HeroPage/Hero';
 import Create from './pages/CreatePage/Create';
+import EditPage from './pages/EditPage/EditPage';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
     <Routes>
       <Route exact path='/' element={<Home/>}/>
       <Route exact path='/create' element={<Create/>}/>
-      <Route exact path='/hero/:id' element={<Hero/>}/>
-      <Route  path='*' element={<Navigate to={'/'}/>}/>
+      <Route exact path='/hero::id' element={<Hero/>}/>
+      <Route exact path='/edit::id' element={<EditPage/>}/>
+      <Route path='*' element={<Navigate to={'/'}/>}/>
     </Routes>
     </>
   );

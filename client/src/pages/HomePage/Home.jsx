@@ -16,9 +16,9 @@ const Home = () => {
   }, [])
 
   return (
-    <Box width={'100%'} height={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+    <Box width={'100%'} height={'100%'} display={'flex'} flexDirection={'column'} alignItems={'center'} minWidth={350} px={3} my={2} gap={2}>
       <PaginationComponent/>
-      <Box display={'flex'} flexWrap={'wrap'} gap={2} justifyContent={'center'}>
+      <Box display={'flex'} flexWrap={'wrap'} gap={2} justifyContent={'center'} maxWidth={935}>
         {(isLoading ? [...Array(1)] : heroes.items).map((hero, index) => 
           isLoading ? (
             <CardHero 

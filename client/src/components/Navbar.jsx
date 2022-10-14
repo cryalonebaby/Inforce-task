@@ -11,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   return (
-    <AppBar position="static" sx={{background: '#202020'}}>
+    <AppBar position="static" sx={{background: '#202020', minWidth: 350, paddingX: 3}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

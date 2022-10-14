@@ -8,16 +8,19 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { deleteHero, fetchHeroes } from '../redux/slices/heroes'
 
 const CardHero = ({hero, isLoading}) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleDelete = () => {
+    dispatch(deleteHero(hero._id))
+    dispatch(fetchHeroes(1))
+  }
   return (
-    // <Box>
-    //   {isLoading ? (
-    //     <Typography variant='h5'>Loading...</Typography>
-    //   ) : (
-    //     <Typography variant='h5'>{nickname}</Typography>
-    //   )}
-    // </Box>
     <Box>
       {isLoading ? (
           <Card sx={{ width: 345 }}>
@@ -38,12 +41,12 @@ const CardHero = ({hero, isLoading}) => {
           <CardActions></CardActions>
         </Card>
       ) : (
-        <Card sx={{ maxWidth: 345}}>
+        <Card sx={{ width: 345}}>
           <CardMedia
             component="img"
             height="240"
             image={hero.images[0]}
-            alt="green iguana"
+            alt="hero"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" textAlign={'center'}>
@@ -51,12 +54,12 @@ const CardHero = ({hero, isLoading}) => {
             </Typography>
           </CardContent>
           <CardActions sx={{display: 'flex', justifyContent: 'space-between'}}>
-            <Button size="small">Learn More</Button>
+            <Button size="small" onClick={() => navigate(`/hero:${hero._id}`)}>Learn More</Button>
             <Box display={'flex'}>
-              <IconButton size="small" sx={{display: 'flex'}}>
+              <IconButton onClick={() => navigate(`/edit:${hero._id}`)} size="small" sx={{display: 'flex'}}>
                 <EditIcon/>
               </IconButton >
-              <IconButton size="small" sx={{display: 'flex'}}>
+              <IconButton onClick={handleDelete} size="small" sx={{display: 'flex'}}>
                 <DeleteIcon sx={{color: 'darkred'}}/>
               </IconButton >
             </Box>

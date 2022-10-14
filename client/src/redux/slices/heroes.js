@@ -4,6 +4,28 @@ import axios from 'axios'
 export const fetchHeroes = createAsyncThunk('heroes/fetchHeroes', async (pageNumber) => {
   const {data} = await axios.get(`api/heroes?page=${pageNumber}`)
   return data
+}) 
+
+export const createHero = createAsyncThunk('heroes/createHero', async (hero) => {
+  const {data} = await axios.post(`api/heroes`, {
+    nickname: hero.nickname,
+    real_name: hero.real_name,
+    origin_description: hero.origin_description,
+    superpowers: hero.superpowers,
+    catch_phrase: hero.catch_phrase,
+    images: hero.images
+  })
+  return data
+})
+
+export const updateHero = createAsyncThunk('heroes/updateHero', async (hero) => {
+  const {data} = await axios.patch(`api/heroes/${hero[0].id}`, hero[1])
+  return data
+})
+
+export const deleteHero = createAsyncThunk('heroes/deleteHero', async (id) => {
+  const {data} = await axios.delete(`api/heroes/${id}`)
+  return data
 })
 
 const initialState = {
@@ -35,6 +57,12 @@ const heroesSlice = createSlice({
     [fetchHeroes.rejected]: (state) => {
       state.heroes.items = []
       state.heroes.status = 'error'
+      state.heroes.pagesAmount = 0
+      state.heroes.currentPage = 1
+    },
+    [updateHero.pending]: (state) => {
+      state.heroes.items = []
+      state.heroes.status = 'loading'
       state.heroes.pagesAmount = 0
       state.heroes.currentPage = 1
     },
