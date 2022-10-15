@@ -12,11 +12,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // routes
-app.use('/api', require('./routes/heroes.routes'))
+app.use('/api', require('./routes/products.routes'))
 
 async function start() {
   try {
-    mongoose.connect("mongodb+srv://cryalonebaby:nikita21@cluster0.tmk9pvv.mongodb.net/heros?retryWrites=true&w=majority", {
+    mongoose.connect("mongodb+srv://cryalonebaby:nikita21@cluster0.bnhrowg.mongodb.net/products?retryWrites=true&w=majority", {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
