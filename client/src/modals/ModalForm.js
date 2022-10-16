@@ -26,16 +26,21 @@ import { storage } from '../firebase'
 const ModalForm = ({isOpen, onClose, product}) => {
 
   // INITIAL STATE
-  const [size, setSize] = useState({
+
+  const sizeInitialState = {
     width: product ? product.size.width : '',
     height: product ? product.size.height : ''
-  })
+  }
 
-  const [form, setForm] = useState({
+  const formInitialState = {
     name: product ? product.name : '',
     count: product ? product.count : '',
     weight: product ? product.weight : ''
-  })
+  }
+
+  const [size, setSize] = useState(sizeInitialState)
+
+  const [form, setForm] = useState(formInitialState)
 
   const [img, setImg] = useState(product ? product.imageUrl : '')
 
@@ -89,6 +94,11 @@ const ModalForm = ({isOpen, onClose, product}) => {
     inputFile.current.click()
   }
 
+  const clearState = () => {
+    setForm(formInitialState)
+    setSize(sizeInitialState)
+    setImg('')
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -102,6 +112,8 @@ const ModalForm = ({isOpen, onClose, product}) => {
       dispatch(updateProduct(toEdit))
     } else {
       dispatch(createProduct(productObject))
+      clearState()
+      
     }
 
     onClose()
@@ -134,6 +146,7 @@ const ModalForm = ({isOpen, onClose, product}) => {
               bgColor={'gray'} 
               justifyContent={'center'} 
               alignItems={'center'}
+              _hover={{cursor: 'pointer'}}
             >
               {img ? 
                 <Image boxSize={'100%'} src={img} alt={'preview'} objectFit={'cover'}/> :
