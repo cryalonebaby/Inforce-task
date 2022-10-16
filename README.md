@@ -8,7 +8,7 @@ This project was created with
 
 ## Available Scripts
 
-To run the solution run
+To run the solution run in the root directory
 
 ```JavaScript
 npm run dev
