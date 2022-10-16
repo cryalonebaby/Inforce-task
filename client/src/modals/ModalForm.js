@@ -24,6 +24,8 @@ import { SmallAddIcon } from '@chakra-ui/icons'
 import { storage } from '../firebase'
 
 const ModalForm = ({isOpen, onClose, product}) => {
+
+  // INITIAL STATE
   const [size, setSize] = useState({
     width: product ? product.size.width : '',
     height: product ? product.size.height : ''
@@ -35,18 +37,24 @@ const ModalForm = ({isOpen, onClose, product}) => {
     weight: product ? product.weight : ''
   })
 
+  const [img, setImg] = useState(product ? product.imageUrl : '')
+
+  const [isUploading, setIsUploading] = useState(false)
+
+  // CONSTS
+
   const inputFile = useRef(null)
 
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
-  const [img, setImg] = useState(product ? product.imageUrl : '')
-
-  const [isUploading, setIsUploading] = useState(false)
-
-  const anyFieldEmpty = form.name === '' || form.count === '' || form.weight === '' || size.width === '' || size.height === '' || img === ''
-
+  const anyFieldEmpty = 
+    Object.values(form).some(val => val === '') || 
+    Object.values(size).some(val => val === '') || 
+    img === ''
+  
+  // FUNCTIONS
   const handleChange = (e) => {
     const {name, value} = e.target
 
@@ -72,6 +80,7 @@ const ModalForm = ({isOpen, onClose, product}) => {
 
   const handleImage = (e) => {
     const [img] = e.target.files
+
     setIsUploading(true)
     uploadImage(img)
   }
@@ -103,15 +112,29 @@ const ModalForm = ({isOpen, onClose, product}) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay minW={370}/>
-      <ModalContent minW={350}>
+      <ModalContent>
         <ModalHeader>Add Product</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           {isUploading ? 
-            <Flex w={'100%'} h={200} bgColor={'gray'} justifyContent={'center'} alignItems={'center'} onClick={handlePick}>
+            <Flex 
+              onClick={handlePick} 
+              w={'100%'} 
+              h={200} 
+              bgColor={'gray'} 
+              justifyContent={'center'} 
+              alignItems={'center'}
+            >
               <Text color={'white'} fontSize={'26px'} fontWeight={'bold'}>Uploading...</Text>
             </Flex> :
-            <Flex w={'100%'} h={200} bgColor={'gray'} justifyContent={'center'} alignItems={'center'} onClick={handlePick}>
+            <Flex 
+              onClick={handlePick} 
+              w={'100%'} 
+              h={200} 
+              bgColor={'gray'} 
+              justifyContent={'center'} 
+              alignItems={'center'}
+            >
               {img ? 
                 <Image boxSize={'100%'} src={img} alt={'preview'} objectFit={'cover'}/> :
                 <SmallAddIcon w={20} h={20} color={'white'}/>
@@ -126,19 +149,20 @@ const ModalForm = ({isOpen, onClose, product}) => {
           />
           <FormControl>
             <FormLabel>Name</FormLabel>
-            <Input type='text' name='name' value={form.name} onChange={handleChange}/>
+            <Input value={form.name} onChange={handleChange} type='text' name='name'/>
 
             <FormLabel>Count</FormLabel>
-            <Input type='number' name='count' value={form.count} onChange={handleChange}/>
+            <Input value={form.count} onChange={handleChange} type='number' name='count'/>
 
             <FormLabel>Width</FormLabel>
-            <Input type='number' name='width' value={size.width} onChange={handleSize}/>
+            <Input value={size.width} onChange={handleSize} type='number' name='width'/>
 
             <FormLabel>Height</FormLabel>
-            <Input type='number' name='height' value={size.height} onChange={handleSize}/>
+            <Input value={size.height} onChange={handleSize} type='number' name='height'/>
 
             <FormLabel>Weidth</FormLabel>
-            <Input type='text' name='weight' value={form.weight} onChange={handleChange}/>
+            <Input value={form.weight} onChange={handleChange} type='text' name='weight'/>
+
             {anyFieldEmpty && <FormHelperText color={'red'}>All Fiels are required.</FormHelperText>}
           </FormControl>
         </ModalBody>

@@ -8,13 +8,13 @@ import { useEffect } from 'react'
 const ProductPage = () => {
   const {id} = useParams()
 
-  const navigate = useNavigate()
-
   const {products} = useSelector(state => state.products)
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const currentProduct = products.items.find(item => item._id === id)
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if(!currentProduct) {
@@ -24,15 +24,37 @@ const ProductPage = () => {
 
   return (
     <Flex justifyContent={'center'} minW={370}>
-      <Flex p={5} gap={10} flexDirection={{base: 'column', md: 'row'}}>
+      <Flex 
+        flexDirection={{
+          base: 'column', 
+          md: 'row'
+        }}
+        p={5} 
+        gap={10} 
+      >
         <Image 
           boxSize={'370px'}
           objectFit={'cover'}
           src={currentProduct?.imageUrl}
           alt='product'
         />
-        <Flex minW={200} maxW={400} flexDirection={'column'} gap={3}>
-          <Flex onClick={onOpen} _hover={{cursor: 'pointer'}} w={90} alignItems={'center'} justifyContent={'center'} gap={1} bgColor={'#D4DAE1'} p={3} borderRadius={15}>
+        <Flex 
+          minW={200} 
+          maxW={400} 
+          flexDirection={'column'} 
+          gap={3}
+        >
+          <Flex 
+            onClick={onOpen} 
+            w={90} 
+            alignItems={'center'} 
+            justifyContent={'center'} 
+            gap={1} 
+            bgColor={'#D4DAE1'} 
+            p={3} 
+            borderRadius={15}
+            _hover={{cursor: 'pointer'}} 
+          >
             <EditIcon w={5} h={5} color={'blue.400'}/>
             <Text fontSize={'12px'} fontWeight={'bold'} color={'blue.600'}>Edit</Text>
           </Flex>

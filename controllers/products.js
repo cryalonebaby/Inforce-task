@@ -2,9 +2,11 @@ const Product = require('../models/Product')
 
 exports.fetchAllProducts = async(req, res) => {
   try {
-    const sortField = req.query.sort ? {count: -1} : {name: 1}
+    const sortField = req.query.sort ? 
+      Product.find().sort({count: -1}) : 
+      Product.find().sort({name: 1}).collation({locale: 'en', caseLevel: true})
 
-    const result = await Product.find().sort(sortField).collation({locale: 'en', caseLevel: true})
+    const result = await sortField
 
     res.status(201).json({products: result})
   } catch (e) {

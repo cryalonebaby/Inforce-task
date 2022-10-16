@@ -6,10 +6,11 @@ import Card from '../components/Card';
 
 const HomePage = () => {
 
-  const dispatch = useDispatch()
+  const [isChecked, setIsChecked] = useState(false)
+
   const {products} = useSelector(state => state.products)
 
-  const [isChecked, setIsChecked] = useState(false)
+  const dispatch = useDispatch()
 
   const isLoading = products.status === 'loading' ? true : false
 
@@ -19,25 +20,66 @@ const HomePage = () => {
     dispatch(fetchProducts())
   }, [isChecked])
 
-  console.log(products.items);
-
   const handleCheck = (e) => {
     setIsChecked(!isChecked)
   }
 
   return (
-    <Flex justifyContent={'center'} minW={350}>
-      <Flex flexDirection={'column'} alignItems={'center'} mt={5}>
-        <Flex flexDirection={'column'} alignItems={'center'} gap={2}>
-          <Text fontSize={'15px'} fontWeight={'bold'}>Sorted By</Text>
-          <Flex gap={2} alignItems={'center'}>
-            <Text fontSize={'15px'} fontWeight={'bold'} color={'gray'}>Name</Text>
-            <Switch checked={isChecked} onChange={handleCheck} size='lg'/>
-            <Text fontSize={'15px'} fontWeight={'bold'} color={'gray'}>Count</Text>
+    <Flex 
+      justifyContent={'center'} 
+      minW={350}
+    >
+      <Flex 
+        flexDirection={'column'} 
+        alignItems={'center'} 
+        mt={5}
+      >
+        <Flex 
+          flexDirection={'column'} 
+          alignItems={'center'} 
+          gap={2}
+        >
+          <Text 
+            fontSize={'15px'} 
+            fontWeight={'bold'}
+          >
+            Sorted By
+          </Text>
+          <Flex 
+            gap={2} 
+            alignItems={'center'}
+          >
+            <Text 
+              fontSize={'15px'} 
+              fontWeight={'bold'} 
+              color={'gray'}
+            >
+              Name
+            </Text>
+            <Switch 
+              checked={isChecked} 
+              onChange={handleCheck} 
+              size='lg'
+            />
+            <Text 
+              fontSize={'15px'} 
+              fontWeight={'bold'} 
+              color={'gray'}
+            >
+              Count
+            </Text>
           </Flex>
         </Flex>
-        <Flex p={10} maxW={1020} flexWrap={'wrap'} gap={5} justifyContent={{base: 'center', lg: 'flex-start'}}>
-        
+        <Flex 
+          maxW={1020} 
+          flexWrap={'wrap'} 
+          justifyContent={{
+            base: 'center', 
+            lg: 'flex-start'
+          }}
+          gap={5} 
+          p={10} 
+        >
           {
             isLoading ? 
             [...Array(9)].map((elem, i) => (
